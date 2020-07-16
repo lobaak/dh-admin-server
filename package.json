@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "dependencies": {
-    "json-server": "^0.16.1"
+  "devDependencies": {
+    "json-server": "^0.16.1",
+    "lowdb": "^1.0.0"
   },
   "scripts": {
     "start": "node index.js"
