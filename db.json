@@ -1,35 +1,12 @@
 {
   "groups": [
     {
-      "id": 1
-    },
-    {
-      "id": 2
-    },
-    {
-      "id": 3
-    },
-    {
-      "id": 4
-    },
-    {
-      "name": "test",
-      "id": 5
-    },
-    {
-      "name": "test",
-      "id": "de1a7f30-086d-4424-8886-b9b57d016a14",
-      "createdAt": 1594884570049
-    },
-    {
-      "name": "test",
-      "id": "5d0e2c8e-b5ae-42bc-9818-0a59dedb65ae",
-      "createdAt": 1594884573982
-    },
-    {
-      "name": "test",
-      "id": "a1f9bf80-c5f1-43b8-9ec1-283e40d5cacb",
-      "createdAt": 1594884576184
+      "id": 1,
+      "name": "default",
+      "description": "default",
+      "isDefault": true,
+      "userId": [],
+      "applicationId": []
     }
   ],
   "applications": [],

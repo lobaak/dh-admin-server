@@ -27,7 +27,7 @@ https: router.db._.mixin({
 server.use(jsonServer.bodyParser);
 server.use((req, res, next) => {
   if (req.method === "POST") {
-    req.body.id = uuidv4();
+    // req.body.id = uuidv4();
     req.body.createdAt = Date.now();
   }
   next();
