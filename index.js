@@ -1,22 +1,21 @@
-const { join } = require("path");
-const { tmpdir } = require("os");
-const fs = require("fs");
+var jsonServer = require("json-server");
+var db = require("./db.js");
+var fs = require("fs");
 
-const jsonServer = require("json-server");
-const file = "db.json";
-const source = join(tmpdir(), file);
+var server = jsonServer.create();
 
-fs.copyFile(file, source, (err) => {
-  if (err) throw err;
-});
+// important to do this for now.sh to work
+// https://spectrum.chat/zeit/general/how-do-i-upload-a-file-to-the-tmp-directory~a1548ae0-91b1-42f5-9388-c79673ba09e4
+fs.writeFileSync("/tmp/db.json", JSON.stringify(db()));
 
-const server = jsonServer.create();
-const router = jsonServer.router(source);
-const middlewares = jsonServer.defaults();
-// const { v4: uuidv4 } = require("uuid");
+// important to have /tmp here otherwise now.sh won't write to file
+// https://stackoverflow.com/questions/43389724/lambda-function-error-erofs-read-only-file-system-open-tmp-test-zip-proc
+var router = jsonServer.router(db());
+var middlewares = jsonServer.defaults();
+var port = process.env.PORT || 5000;
 
 //github.com/typicode/json-server/issues/366#issuecomment-439008812
-https: router.db._.mixin({
+router.db._.mixin({
   getById(collection, id) {
     const idProp = this.__id();
     if (Array.isArray(id)) {
@@ -35,17 +34,8 @@ https: router.db._.mixin({
   },
 });
 
-server.use(jsonServer.bodyParser);
-server.use((req, res, next) => {
-  if (req.method === "POST") {
-    // req.body.id = uuidv4();
-    req.body.createdAt = Date.now();
-  }
-  next();
-});
 server.use(middlewares);
 server.use(router);
-
-server.listen(6996, () => {
-  console.log("JSON Server is running");
+server.listen(port, function () {
+  console.log("JSON Server is running on http://localhost:" + port);
 });
