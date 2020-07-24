@@ -6,7 +6,7 @@ module.exports = () => {
         name: "default",
         description: "default",
         isDefault: true,
-        userId: [],
+        userId: [1],
         applicationId: [1, 2],
       },
     ],
@@ -36,7 +36,15 @@ module.exports = () => {
         name: "App Z",
       },
     ],
-    users: [],
+    users: [
+      {
+        id: 1,
+        firstName: "Hilel",
+        surname: "Adams",
+        email: "johebo@mailinator.com",
+        isAdmin: true,
+      },
+    ],
   };
   return data;
 };
