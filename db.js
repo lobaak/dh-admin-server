@@ -7,7 +7,7 @@ module.exports = () => {
         description: "default",
         isDefault: true,
         userId: [],
-        applicationId: [],
+        applicationId: [1, 2],
       },
     ],
     applications: [
