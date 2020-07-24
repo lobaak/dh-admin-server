@@ -1,4 +1,6 @@
 var jsonServer = require("json-server");
+const { v4: uuid } = require("uuid");
+
 var db = require("./db.js");
 var server = jsonServer.create();
 var router = jsonServer.router(db());
@@ -32,6 +34,16 @@ server.use(
     "/applications/:id": "/applications/$1",
   })
 );
+
+server.use(jsonServer.bodyParser);
+server.use((req, res, next) => {
+  if (req.method === "POST") {
+    req.body.createdAt = Date.now();
+    req.body.id = uuid();
+  }
+  // Continue to JSON Server router
+  next();
+});
 
 server.use(middlewares);
 server.use(router);

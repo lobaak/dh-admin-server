@@ -1,48 +1,62 @@
+const { v4: uuid } = require("uuid");
+
+const userId = uuid();
+const appId1 = uuid();
+const appId2 = uuid();
+
 module.exports = () => {
   const data = {
     groups: [
       {
-        id: 1,
+        id: uuid(),
         name: "default",
         description: "default",
         isDefault: true,
-        userId: [1],
-        applicationId: [1, 2],
+        userId: [userId],
+        applicationId: [appId1, appId2],
+        createdAt: Date.now(),
       },
     ],
     applications: [
       {
-        id: 1,
+        id: appId1,
         name: "Permissioning",
+        createdAt: Date.now(),
       },
       {
-        id: 2,
+        id: appId2,
         name: "Support",
+        createdAt: Date.now(),
       },
       {
-        id: 3,
+        id: uuid(),
         name: "LBR Dashboard",
+        createdAt: Date.now(),
       },
       {
-        id: 4,
+        id: uuid(),
         name: "App X",
+        createdAt: Date.now(),
       },
       {
-        id: 5,
+        id: uuid(),
         name: "App Y",
+        createdAt: Date.now(),
       },
       {
-        id: 6,
+        id: uuid(),
         name: "App Z",
+        createdAt: Date.now(),
       },
     ],
     users: [
       {
-        id: 1,
+        id: userId,
         firstName: "Hilel",
         surname: "Adams",
         email: "johebo@mailinator.com",
         isAdmin: true,
+        createdAt: Date.now(),
       },
     ],
   };
