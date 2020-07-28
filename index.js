@@ -29,7 +29,10 @@ router.db._.mixin({
 
 server.use(
   jsonServer.rewriter({
+    "/groups": "/groups?_expand=user&_expand=application",
     "/groups/:id": "/groups/$1?_expand=user&_expand=application",
+    "/users": "/users?_expand=userType",
+    "/users/:id": "/users/$1?_expand=userType",
   })
 );
 

@@ -3,6 +3,7 @@ const { v4: uuid } = require("uuid");
 const userId = uuid();
 const appId1 = uuid();
 const appId2 = uuid();
+const type = uuid();
 
 module.exports = () => {
   const data = {
@@ -21,32 +22,26 @@ module.exports = () => {
       {
         id: appId1,
         name: "Permissioning",
-        createdAt: Date.now(),
       },
       {
         id: appId2,
         name: "Support",
-        createdAt: Date.now(),
       },
       {
         id: uuid(),
         name: "LBR Dashboard",
-        createdAt: Date.now(),
       },
       {
         id: uuid(),
         name: "App X",
-        createdAt: Date.now(),
       },
       {
         id: uuid(),
         name: "App Y",
-        createdAt: Date.now(),
       },
       {
         id: uuid(),
         name: "App Z",
-        createdAt: Date.now(),
       },
     ],
     users: [
@@ -55,8 +50,18 @@ module.exports = () => {
         firstName: "Hilel",
         surname: "Adams",
         email: "johebo@mailinator.com",
-        isAdmin: true,
         createdAt: Date.now(),
+        userTypeId: type,
+      },
+    ],
+    userTypes: [
+      {
+        id: type,
+        name: "Admin",
+      },
+      {
+        id: uuid(),
+        name: "Default",
       },
     ],
   };
