@@ -1,13 +1,14 @@
-var jsonServer = require("json-server");
-const { v4: uuid } = require("uuid");
+const jsonServer = require('json-server');
+const { v4: uuid } = require('uuid');
 
-var db = require("./db.js");
-var server = jsonServer.create();
-var router = jsonServer.router(db());
-var middlewares = jsonServer.defaults();
-var port = process.env.PORT || 5000;
+const db = require('./db.js');
 
-//github.com/typicode/json-server/issues/366#issuecomment-439008812
+const server = jsonServer.create();
+const router = jsonServer.router(db());
+const middlewares = jsonServer.defaults();
+const port = process.env.PORT || 5000;
+
+// github.com/typicode/json-server/issues/366#issuecomment-439008812
 router.db._.mixin({
   getById(collection, id) {
     const idProp = this.__id();
@@ -17,37 +18,65 @@ router.db._.mixin({
         if (this.has(doc, idProp)) {
           return ids.includes(doc[idProp].toString());
         }
+        return doc;
       });
     }
     return this.find(collection, (doc) => {
       if (this.has(doc, idProp)) {
         return doc[idProp].toString() === id.toString();
       }
+      return doc;
     });
   },
 });
 
 server.use(
   jsonServer.rewriter({
-    "/groups": "/groups?_expand=user&_expand=application",
-    "/groups/:id": "/groups/$1?_expand=user&_expand=application",
-    "/users": "/users?_expand=userType",
-    "/users/:id": "/users/$1?_expand=userType",
+    '/groups': '/groups?_expand=user&_expand=application',
+    '/groups/:id': '/groups/$1?_expand=user&_expand=application',
+    '/users': '/users?_expand=userType',
+    '/users/:id': '/users/$1?_expand=userType',
   })
 );
 
 server.use(jsonServer.bodyParser);
-server.use((req, res, next) => {
-  if (req.method === "POST") {
-    req.body.createdAt = Date.now();
-    req.body.id = uuid();
-  }
-  // Continue to JSON Server router
+
+server.post('/groups', (req, res, next) => {
+  const defaults = {
+    createdAt: Date.now(),
+    id: uuid(),
+    applicationId: [],
+    userId: [],
+  };
+  req.body = { ...defaults, ...req.body };
+  next();
+});
+
+server.post('/users', (req, res, next) => {
+  const defaults = {
+    id: uuid(),
+    createdAt: Date.now(),
+  };
+  req.body = { ...defaults, ...req.body };
+  next();
+});
+
+server.put('/users/:id', (req, res, next) => {
+  const { id } = req.params;
+  const user = router.db.get('users').find({ id }).value();
+  req.body = { ...user, ...req.body };
+  next();
+});
+
+server.put('/groups/:id', (req, res, next) => {
+  const { id } = req.params;
+  const group = router.db.get('groups').find({ id }).value();
+  req.body = { ...group, ...req.body };
   next();
 });
 
 server.use(middlewares);
 server.use(router);
-server.listen(port, function () {
-  console.log("JSON Server is running on http://localhost:" + port);
+server.listen(port, () => {
+  console.log(`JSON Server is running on http://localhost:${port}`);
 });
