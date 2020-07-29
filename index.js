@@ -14,6 +14,7 @@ router.db._.mixin({
     const idProp = this.__id();
     if (Array.isArray(id)) {
       const ids = id.map((_id) => _id.toString());
+
       return this.filter(collection, (doc) => {
         if (this.has(doc, idProp)) {
           return ids.includes(doc[idProp].toString());
@@ -21,6 +22,7 @@ router.db._.mixin({
         return doc;
       });
     }
+
     return this.find(collection, (doc) => {
       if (this.has(doc, idProp)) {
         return doc[idProp].toString() === id.toString();
@@ -38,7 +40,7 @@ server.use(
     '/users/:id': '/users/$1?_expand=userType',
   })
 );
-
+server.use(middlewares);
 server.use(jsonServer.bodyParser);
 
 server.post('/groups', (req, res, next) => {
@@ -68,6 +70,15 @@ server.put('/users/:id', (req, res, next) => {
   next();
 });
 
+server.get('/users/:id/groups', (req, res) => {
+  const { id } = req.params;
+  const groups = router.db
+    .get('groups')
+    .filter((item) => item.userId.includes(id))
+    .value();
+  res.jsonp(groups);
+});
+
 server.put('/groups/:id', (req, res, next) => {
   const { id } = req.params;
   const group = router.db.get('groups').find({ id }).value();
@@ -75,7 +86,6 @@ server.put('/groups/:id', (req, res, next) => {
   next();
 });
 
-server.use(middlewares);
 server.use(router);
 server.listen(port, () => {
   console.log(`JSON Server is running on http://localhost:${port}`);

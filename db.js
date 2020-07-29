@@ -1,4 +1,4 @@
-const { v4: uuid } = require("uuid");
+const { v4: uuid } = require('uuid');
 
 const userId = uuid();
 const appId1 = uuid();
@@ -10,8 +10,8 @@ module.exports = () => {
     groups: [
       {
         id: uuid(),
-        name: "default",
-        description: "default",
+        name: 'default',
+        description: 'default',
         isDefault: true,
         userId: [userId],
         applicationId: [appId1, appId2],
@@ -21,35 +21,35 @@ module.exports = () => {
     applications: [
       {
         id: appId1,
-        name: "Permissioning",
+        name: 'Permissioning',
       },
       {
         id: appId2,
-        name: "Support",
+        name: 'Support',
       },
       {
         id: uuid(),
-        name: "LBR Dashboard",
+        name: 'LBR Dashboard',
       },
       {
         id: uuid(),
-        name: "App X",
+        name: 'App X',
       },
       {
         id: uuid(),
-        name: "App Y",
+        name: 'App Y',
       },
       {
         id: uuid(),
-        name: "App Z",
+        name: 'App Z',
       },
     ],
     users: [
       {
         id: userId,
-        firstName: "Hilel",
-        surname: "Adams",
-        email: "johebo@mailinator.com",
+        firstName: 'Hilel',
+        surname: 'Adams',
+        email: 'johebo@mailinator.com',
         createdAt: Date.now(),
         userTypeId: type,
       },
@@ -57,11 +57,11 @@ module.exports = () => {
     userTypes: [
       {
         id: type,
-        name: "Admin",
+        name: 'Admin',
       },
       {
         id: uuid(),
-        name: "Default",
+        name: 'Default',
       },
     ],
   };
