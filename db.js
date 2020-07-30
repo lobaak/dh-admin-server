@@ -52,15 +52,39 @@ module.exports = () => {
         email: 'johebo@mailinator.com',
         createdAt: Date.now(),
         userTypeId: type,
+        resetRequired: false,
+        disabled: false,
+      },
+
+      {
+        id: uuid(),
+        firstName: 'David',
+        surname: 'Powers',
+        email: 'hisedime@mailinator.com',
+        createdAt: Date.now(),
+        userTypeId: type,
+        resetRequired: false,
+        disabled: false,
+      },
+
+      {
+        id: uuid(),
+        firstName: 'Latifah',
+        surname: 'Guthrie',
+        email: 'fihi@mailinator.com',
+        createdAt: Date.now(),
+        userTypeId: type,
+        resetRequired: false,
+        disabled: false,
       },
     ],
     userTypes: [
       {
-        id: type,
+        id: uuid(),
         name: 'Admin',
       },
       {
-        id: uuid(),
+        id: type,
         name: 'Default',
       },
     ],
